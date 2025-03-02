@@ -41,7 +41,9 @@ The following **additional** features are implemented:
 
 * [X] Ability to filter Questions based on Category
 * [x] Button Created to allow user to access external ressources for Understanding reinforcement
-* [X] Modify Title and Icon on CSR 
+* [X] Modify Title and Icon on CSR
+* [X] Responsive Design Implementation for Smaller Devices
+* [ ] 
 
 ## Video Walkthrough
 
