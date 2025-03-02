@@ -1,0 +1,271 @@
+.flashcard {
+  width: min(90%, 600px);
+  height: min(60vh, 500px);
+  perspective: 2000px;
+  cursor: pointer;
+  margin: clamp(10px, 3vh, 20px) auto;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.flashcard-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.flashcard.flipped .flashcard-inner {
+  transform: rotateY(180deg);
+}
+
+.flashcard:hover {
+  transform: translateY(-5px);
+}
+
+.flashcard-front, .flashcard-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  cursor: pointer;
+  user-select: none;
+}
+
+.flashcard-front {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.85) 100%
+  );
+}
+
+.flashcard-back {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(240, 240, 240, 0.9) 100%
+  );
+  transform: rotateY(180deg);
+}
+
+.flashcard-front p, .flashcard-back p {
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  margin: 0;
+  padding: clamp(10px, 3vw, 20px);
+  max-width: 90%;
+  overflow-y: auto;
+  color: #2d3748;
+  font-weight: 500;
+  line-height: 1.6;
+  max-height: 70%;
+}
+
+.category, .difficulty {
+  position: absolute;
+  padding: clamp(6px, 1.5vw, 8px) clamp(12px, 2vw, 16px);
+  border-radius: 12px;
+  font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.category {
+  top: 20px;
+  left: 20px;
+  background: rgba(66, 153, 225, 0.15);
+  color: #2b6cb0;
+  border: 1px solid rgba(66, 153, 225, 0.2);
+}
+
+.difficulty {
+  top: 20px;
+  right: 20px;
+}
+
+/* Difficulty-based colors with modern gradient backgrounds */
+.flashcard.easy .difficulty {
+  background: linear-gradient(45deg, #48bb78 0%, #38a169 100%);
+  color: white;
+  box-shadow: 0 2px 10px rgba(56, 161, 105, 0.3);
+}
+
+.flashcard.medium .difficulty {
+  background: linear-gradient(45deg, #ecc94b 0%, #d69e2e 100%);
+  color: white;
+  box-shadow: 0 2px 10px rgba(214, 158, 46, 0.3);
+}
+
+.flashcard.hard .difficulty {
+  background: linear-gradient(45deg, #f56565 0%, #c53030 100%);
+  color: white;
+  box-shadow: 0 2px 10px rgba(197, 48, 48, 0.3);
+}
+
+/* Subject-based borders with gradients */
+.flashcard[class*="Algorithm"] {
+  border-left: 4px solid;
+  border-image: linear-gradient(to bottom, #4299e1, #2b6cb0) 1;
+}
+
+.flashcard[class*="Data Structures"] {
+  border-left: 4px solid #9b59b6;
+}
+
+.flashcard[class*="System Design"] {
+  border-left: 4px solid #1abc9c;
+}
+
+.flashcard[class*="Security"] {
+  border-left: 4px solid #e74c3c;
+}
+
+.flashcard[class*="Web Development"] {
+  border-left: 4px solid #3498db;
+}
+
+.flashcard[class*="Programming Concepts"] {
+  border-left: 4px solid #f1c40f;
+}
+
+.flashcard[class*="Memory-Management"] {
+  border-left: 4px solid #e91e63;
+}
+
+.flashcard[class*="Operating-Systems"] {
+  border-left: 4px solid #9c27b0;
+}
+
+.flashcard[class*="Networking"] {
+  border-left: 4px solid #2196f3;
+}
+
+.flashcard[class*="Databases"] {
+  border-left: 4px solid #009688;
+}
+
+.flashcard[class*="Concurrency"] {
+  border-left: 4px solid #ff5722;
+}
+
+/* Enhanced Responsive Design */
+@media (max-width: 768px) {
+  .flashcard {
+    width: 95%;
+    height: min(50vh, 400px);
+    margin: 15px auto;
+  }
+
+  .category {
+    top: 10px;
+    left: 10px;
+  }
+
+  .difficulty {
+    top: 10px;
+    right: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .flashcard {
+    width: 98%;
+    height: min(45vh, 350px);
+    margin: 10px auto;
+  }
+
+  .flashcard-front p, .flashcard-back p {
+    padding: 15px;
+    font-size: clamp(0.9rem, 4vw, 1.2rem);
+  }
+
+  .category, .difficulty {
+    padding: 4px 8px;
+    font-size: 0.7rem;
+  }
+}
+
+/* Landscape Mode */
+@media (max-height: 600px) and (orientation: landscape) {
+  .flashcard {
+    height: 70vh;
+    width: min(70%, 500px);
+  }
+
+  .flashcard-front p, .flashcard-back p {
+    font-size: clamp(0.9rem, 2vw, 1.2rem);
+    padding: 10px;
+  }
+}
+
+/* Larger Screens */
+@media (min-width: 1200px) {
+  .flashcard {
+    width: min(70%, 800px);
+    height: min(65vh, 600px);
+  }
+
+  .flashcard-front p, .flashcard-back p {
+    font-size: 1.6rem;
+    max-width: 85%;
+  }
+}
+
+/* High-contrast mode */
+@media (prefers-contrast: high) {
+  .flashcard-front, .flashcard-back {
+    background: #ffffff;
+    border: 2px solid #000000;
+  }
+
+  .category, .difficulty {
+    border: 1px solid currentColor;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .flashcard,
+  .flashcard-inner,
+  .next-button {
+    transition: none;
+  }
+
+  .flashcard:hover {
+    transform: none;
+  }
+}
+
+@media (max-height: 600px) {
+  .flashcard {
+    height: 60vh;
+  }
+}
+
+/* Add smooth animations for card interaction */
+@keyframes cardHover {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-5px); }
+}
+
+@keyframes cardClick {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.98); }
+  100% { transform: scale(1); }
+}
