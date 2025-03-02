@@ -41,12 +41,13 @@ The following **additional** features are implemented:
 
 * [X] Ability to filter Questions based on Category
 * [x] Button Created to allow user to access external ressources for Understanding reinforcement
+* [X] Modify Title and Icon on CSR 
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented required features:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://github.com/Charlesnorris509/CSTrivia/blob/main/CSQuiz.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 <!-- Replace this with whatever GIF tool you used! -->
 GIF created with ScreenToGif 
