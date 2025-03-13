@@ -1,8 +1,13 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import Flashcard from './components/Flashcard'
 
 function App() {
+  // Set document title when component mounts
+  useEffect(() => {
+    document.title = "CS Trivia Flashcards";
+  }, []);
+
   const flashcards = [
     {
       id: 1,
@@ -1058,17 +1063,59 @@ function App() {
 
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [selectedSubject, setSelectedSubject] = useState('All');
+  const [currentStreak, setCurrentStreak] = useState(0);
+  const [longestStreak, setLongestStreak] = useState(0);
+  const [masteredCards, setMasteredCards] = useState([]);
+
+  // Update streaks when user answers correctly
+  const handleCorrectAnswer = () => {
+    const newStreak = currentStreak + 1;
+    setCurrentStreak(newStreak);
+    if (newStreak > longestStreak) {
+      setLongestStreak(newStreak);
+    }
+  };
+
+  // Reset streak on wrong answer
+  const handleWrongAnswer = () => {
+    setCurrentStreak(0);
+  };
+
+  // Handle mastering a card
+  const handleMasterCard = (cardId) => {
+    const masteredCard = flashcards.find(card => card.id === cardId);
+    setMasteredCards([...masteredCards, masteredCard]);
+  };
 
   // Get unique subjects from flashcards
   const subjects = ['All', ...new Set(flashcards.map(card => card.subject))].sort();
-
+  
   // Filter flashcards based on selected subject
   const filteredFlashcards = selectedSubject === 'All' 
     ? flashcards 
     : flashcards.filter(card => card.subject === selectedSubject);
+  // Filter out mastered cards from the available cards
+  const availableCards = filteredFlashcards.filter(
+    card => !masteredCards.some(mastered => mastered.id === card.id)
+  );
 
+  // Move to next card in sequence
+  const handleNextCard = () => {
+    setCurrentCardIndex((prevIndex) => 
+      prevIndex >= availableCards.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  // Move to previous card in sequence
+  const handlePreviousCard = () => {
+    setCurrentCardIndex((prevIndex) => 
+      prevIndex <= 0 ? availableCards.length - 1 : prevIndex - 1
+    );
+  };
+
+  // Get random card (for shuffle functionality)
   const getRandomCard = () => {
-    const randomIndex = Math.floor(Math.random() * filteredFlashcards.length);
+    const randomIndex = Math.floor(Math.random() * availableCards.length);
     setCurrentCardIndex(randomIndex);
   };
 
@@ -1079,9 +1126,12 @@ function App() {
 
   return (
     <div className="app">
+      <div className="main-title-container">
+        <h1 className="main-title">CS Trivia Flashcards</h1>
+      </div>
       <header className="app-header">
-        <h1>CS Trivia Flashcards</h1>
-        <p className="description">Test your computer science knowledge with these interactive flashcards!</p>
+        <p className="description">
+        Test your computer science knowledge with these interactive flashcards!</p>
         <div className="filter-container">
           {subjects.map((subject) => (
             <button
@@ -1102,15 +1152,30 @@ function App() {
           Click here to learn more about DSA on GeeksForGeeks
         </a>
         <p className="card-count">
-          Showing: {filteredFlashcards.length} {selectedSubject !== 'All' ? `${selectedSubject} ` : ''}Cards
+          Showing: {availableCards.length} {selectedSubject !== 'All' ? `${selectedSubject} ` : ''}Cards
+          <span className="card-position"> (Card {currentCardIndex + 1} of {availableCards.length})</span>
         </p>
+        <div className="streak-counter">
+          <span>Current Streak: {currentStreak}</span>
+          <span>Longest Streak: {longestStreak}</span>
+        </div>
+        <div className="mastered-count">
+          Mastered Cards: {masteredCards.length}
+        </div>
+        <button className="shuffle-button" onClick={getRandomCard}>
+          Shuffle Cards
+        </button>
       </header>
       
       <main className="flashcard-container">
-        <Flashcard card={filteredFlashcards[currentCardIndex]} />
-        <button className="next-button" onClick={getRandomCard}>
-          Next Card
-        </button>
+        <Flashcard 
+          card={availableCards[currentCardIndex]} 
+          onNext={handleNextCard}
+          onPrevious={handlePreviousCard}
+          onCorrectAnswer={handleCorrectAnswer}
+          onWrongAnswer={handleWrongAnswer}
+          onMasterCard={handleMasterCard}
+        />
       </main>
     </div>
   )
