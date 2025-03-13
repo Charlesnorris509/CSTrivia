@@ -19,7 +19,7 @@ This web app: An interactive flashcard application built with React and Vite tha
 - Responsive design with accessibility features
 - Random card selection
 
-# Web Development Project 3 - *Name of App Here*
+# Web Development Project 3 - CS Trivia
 
 Submitted by: Charles Norris
 
